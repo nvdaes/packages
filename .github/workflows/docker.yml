@@ -1,0 +1,23 @@
+name: Docker
+
+# This step triggers after the user creates `publish.yml` on branch `cd`.
+# This workflow updates from step 1 to step 2.
+
+# This will run every time we push `publish.yml` on branch `cd`.
+# Reference: https://docs.github.com/en/actions/learn-github-actions/events-that-trigger-workflows
+on:
+  workflow_dispatch:
+
+jobs:
+  docker:
+    permissions:
+      packages: write
+    name: Docker
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Docker login
+        run: docker login ghcr.io -u nvdaes
+      - name: Docker pull
+        run: docker pull ghcr.io/YOURNAME/publish-packages/game:v0.0.0
